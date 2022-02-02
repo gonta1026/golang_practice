@@ -1,0 +1,119 @@
+package models
+
+import (
+	"fmt"
+	"time"
+	"todo_app/utils"
+)
+
+type Todo struct {
+	ID        int
+	Content   string
+	UserID    int
+	CreatedAt time.Time
+}
+
+func (u *User) CreateTodo(content string) (err error) {
+	cmd := `insert into todos (
+		content,
+		user_id,
+		created_at) values (?, ?, ?)`
+
+	_, err = Db.Exec(cmd,
+		content,
+		u.ID,
+		time.Now(),
+	)
+	utils.LogFatalln(err)
+
+	return err
+}
+
+func CreateTododa(u User, content string) (err error) {
+	cmd := `insert into todos (
+		content,
+		user_id,
+		created_at) values (?, ?, ?)`
+
+	_, err = Db.Exec(cmd,
+		content,
+		u.ID,
+		time.Now(),
+	)
+	utils.LogFatalln(err)
+
+	return err
+}
+
+func GetTodo(id int) (todo Todo, err error) {
+	todo = Todo{}
+	cmd := `select id, content, user_id, created_at
+	from todos where id = ?`
+	err = Db.QueryRow(cmd, id).Scan(
+		&todo.ID,
+		&todo.Content,
+		&todo.UserID,
+		&todo.CreatedAt,
+	)
+	return todo, err
+}
+
+func GetTodos() (todos []Todo, err error) {
+	// todo = Todo{}
+	cmd := `select id, content, user_id, created_at
+	from todos`
+	rows, err := Db.Query(cmd)
+	utils.LogFatalln(err)
+	fmt.Println("rows", rows.Scan())
+	for rows.Next() {
+		var todo Todo
+		err = rows.Scan(
+			&todo.ID,
+			&todo.Content,
+			&todo.UserID,
+			&todo.CreatedAt,
+		)
+		utils.LogFatalln(err)
+
+		todos = append(todos, todo)
+	}
+	rows.Close()
+	return todos, err
+}
+
+func GetTodoByUser(user_id int) (todos []Todo, err error) {
+	// todo = Todo{}
+	cmd := `select id, content, user_id, created_at
+	from todos where user_id = ?`
+	rows, err := Db.Query(cmd, user_id)
+	utils.LogFatalln(err)
+
+	for rows.Next() {
+		var todo Todo
+		err = rows.Scan(
+			&todo.ID,
+			&todo.Content,
+			&todo.UserID,
+			&todo.CreatedAt,
+		)
+		utils.LogFatalln(err)
+
+		todos = append(todos, todo)
+	}
+	rows.Close()
+	return todos, err
+}
+
+func (t *Todo) UpdateTodo() error {
+	cmd := `update todos set content = ?,user_id = ? where id = ?`
+	_, err = Db.Exec(cmd, t.Content, t.UserID, t.ID)
+	utils.LogFatalln(err)
+	return err
+}
+
+func (t *Todo) DaleteTodo() (err error) {
+	cmd := `DELETE FROM TODOS WHERE id = ?`
+	_, err = Db.Exec(cmd, t.ID)
+	utils.LogFatalln(err)
+	return err
+}
