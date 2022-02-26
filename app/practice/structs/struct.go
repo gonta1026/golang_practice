@@ -16,6 +16,10 @@ type Uber struct {
 
 type MapUber map[string]string
 
+func (u *Uber) Save() {
+	fmt.Println("sssss")
+}
+
 func base() {
 	// mapは参照渡しになるのだー
 	mapUser := MapUber{"otsuka": "keisei", "yamada": "akira"}
@@ -29,6 +33,7 @@ func base() {
 		Name: "kesiei",
 		Age:  33,
 	}
+	user.Save()
 	newUser := user
 	user.Name = "新しいkesiei------------"
 	fmt.Println(newUser)
