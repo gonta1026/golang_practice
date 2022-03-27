@@ -4,10 +4,6 @@ import "fmt"
 
 type S struct{ value string }
 
-// func (s S) SetA(v string) {
-// 	s.value = v
-// }
-
 func (s *S) SetB(v string) {
 	s.value = v
 }

@@ -1,9 +1,13 @@
 package main
 
-import "todo_app/app/practice/array"
+import (
+	"todo_app/app/practice/udemy/basic"
+)
 
 func main() {
-	array.ArrayPractice()
+	// es6.Method()
+	// polymorphism.Output()
+	basic.Basic()
 	// object.Object()
 	// todo := &models.Todo{
 	// 	ID:        0,
@@ -12,5 +16,4 @@ func main() {
 	// 	CreatedAt: time.Time{},
 	// }
 	// todo.UpdateTodo()
-
 }

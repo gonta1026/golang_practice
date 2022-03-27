@@ -1,6 +1,7 @@
 package config
 
 import (
+	"log"
 	"todo_app/utils"
 
 	"gopkg.in/ini.v1"
@@ -24,7 +25,9 @@ func init() {
 func LoadConfig() {
 	cfg, err := ini.Load("config.ini")
 
-	utils.LogFatalln(err)
+	if err != nil {
+		log.Fatalln(err)
+	}
 	Config = ConfigList{
 		Port:      cfg.Section("web").Key("web").MustString("7000"),
 		SQLDriver: cfg.Section("db").Key("driver").String(),
