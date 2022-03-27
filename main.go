@@ -1,13 +1,16 @@
 package main
 
 import (
-	"todo_app/app/practice/udemy/basic"
+	"todo_app/app/practice/udemy/strc"
 )
 
 func main() {
 	// es6.Method()
 	// polymorphism.Output()
-	basic.Basic()
+	// basic.Basic()
+	// str
+	// basic.Basic()
+	strc.Basic()
 	// object.Object()
 	// todo := &models.Todo{
 	// 	ID:        0,
